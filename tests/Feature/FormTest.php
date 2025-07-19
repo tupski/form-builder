@@ -53,7 +53,7 @@ class FormTest extends TestCase
         $user2 = User::factory()->create(['role' => 'user']);
         $form = Form::factory()->create(['user_id' => $user2->id]);
 
-        $response = $this->actingAs($user1)->get("/forms/{$form->id}");
+        $response = $this->actingAs($user1)->get("/forms/{$form->slug}");
 
         $response->assertStatus(403);
     }

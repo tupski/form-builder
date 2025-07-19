@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Form;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 
 class FormBuilderController extends Controller
 {
+    use AuthorizesRequests;
 
     public function show(Form $form)
     {
