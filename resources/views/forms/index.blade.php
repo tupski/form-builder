@@ -30,31 +30,34 @@
                                             {{ $form->is_active ? 'Active' : 'Inactive' }}
                                         </span>
                                     </div>
-                                    
+
                                     @if($form->description)
                                         <p class="text-gray-600 text-sm mb-4">{{ Str::limit($form->description, 100) }}</p>
                                     @endif
-                                    
+
                                     <div class="text-sm text-gray-500 mb-4">
                                         <p>Fields: {{ $form->fields->count() }}</p>
                                         <p>Submissions: {{ $form->submissions->count() }}</p>
                                         <p>Created: {{ $form->created_at->format('M d, Y') }}</p>
                                     </div>
-                                    
-                                    <div class="flex space-x-2">
-                                        <a href="{{ route('forms.builder', $form) }}" class="bg-blue-500 hover:bg-blue-700 text-white text-xs font-bold py-2 px-3 rounded">
+
+                                    <div class="flex flex-wrap gap-1">
+                                        <a href="{{ route('forms.builder', $form) }}" class="bg-blue-500 hover:bg-blue-700 text-white text-xs font-bold py-1 px-2 rounded">
                                             Builder
                                         </a>
-                                        <a href="{{ route('form.show', $form->slug) }}" target="_blank" class="bg-green-500 hover:bg-green-700 text-white text-xs font-bold py-2 px-3 rounded">
+                                        <a href="{{ route('forms.submissions', $form) }}" class="bg-purple-500 hover:bg-purple-700 text-white text-xs font-bold py-1 px-2 rounded">
+                                            Submissions
+                                        </a>
+                                        <a href="{{ route('form.show', $form->slug) }}" target="_blank" class="bg-green-500 hover:bg-green-700 text-white text-xs font-bold py-1 px-2 rounded">
                                             Preview
                                         </a>
-                                        <a href="{{ route('forms.edit', $form) }}" class="bg-yellow-500 hover:bg-yellow-700 text-white text-xs font-bold py-2 px-3 rounded">
+                                        <a href="{{ route('forms.edit', $form) }}" class="bg-yellow-500 hover:bg-yellow-700 text-white text-xs font-bold py-1 px-2 rounded">
                                             Edit
                                         </a>
                                         <form action="{{ route('forms.destroy', $form) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete this form?')">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="bg-red-500 hover:bg-red-700 text-white text-xs font-bold py-2 px-3 rounded">
+                                            <button type="submit" class="bg-red-500 hover:bg-red-700 text-white text-xs font-bold py-1 px-2 rounded">
                                                 Delete
                                             </button>
                                         </form>
@@ -62,7 +65,7 @@
                                 </div>
                             @endforeach
                         </div>
-                        
+
                         <div class="mt-6">
                             {{ $forms->links() }}
                         </div>

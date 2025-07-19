@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('title');
             $table->text('description')->nullable();
-            $table->text('success_message')->default('Thank you for your submission!');
+            $table->string('success_message', 500)->default('Thank you for your submission!');
             $table->boolean('is_active')->default(true);
             $table->string('slug')->unique();
             $table->json('settings')->nullable(); // For additional form settings

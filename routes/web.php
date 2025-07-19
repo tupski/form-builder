@@ -24,6 +24,8 @@ Route::middleware('auth')->group(function () {
     Route::get('forms/{form}/builder', [FormBuilderController::class, 'show'])->name('forms.builder');
     Route::post('forms/{form}/fields', [FormBuilderController::class, 'saveFields'])->name('forms.save-fields');
     Route::post('forms/{form}/conditional-rules', [FormBuilderController::class, 'saveConditionalRules'])->name('forms.save-conditional-rules');
+    Route::get('forms/{form}/submissions', [FormController::class, 'submissions'])->name('forms.submissions');
+    Route::get('forms/{form}/export', [FormController::class, 'exportSubmissions'])->name('forms.export-submissions');
 
     // Admin routes
     Route::middleware('admin')->group(function () {

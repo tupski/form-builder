@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Form;
+use App\Exports\FormSubmissionsExport;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
 
 class FormController extends Controller
 {
@@ -104,5 +106,33 @@ class FormController extends Controller
     {
         $forms = Form::with('user')->latest()->paginate(15);
         return view('admin.forms.index', compact('forms'));
+    }
+
+    /**
+     * Show form submissions
+     */
+    public function submissions(Form $form)
+    {
+        $this->authorize('view', $form);
+
+        $form->load(['fields' => function($query) {
+            $query->orderBy('order');
+        }]);
+
+        $submissions = $form->submissions()->latest()->paginate(20);
+
+        return view('forms.submissions', compact('form', 'submissions'));
+    }
+
+    /**
+     * Export form submissions to Excel
+     */
+    public function exportSubmissions(Form $form)
+    {
+        $this->authorize('view', $form);
+
+        $filename = 'submissions-' . $form->slug . '-' . now()->format('Y-m-d') . '.xlsx';
+
+        return Excel::download(new FormSubmissionsExport($form), $filename);
     }
 }
