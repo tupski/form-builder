@@ -135,4 +135,47 @@ class FormController extends Controller
 
         return Excel::download(new FormSubmissionsExport($form), $filename);
     }
+
+    /**
+     * Generate short URL for form
+     */
+    public function generateShortUrl(Form $form)
+    {
+        $this->authorize('update', $form);
+
+        $shortUrl = $form->generateShortUrl();
+        $fullUrl = url('/f/' . $shortUrl);
+
+        return response()->json([
+            'success' => true,
+            'url' => $fullUrl,
+            'short_code' => $shortUrl,
+            'message' => 'Short URL generated successfully!'
+        ]);
+    }
+
+    /**
+     * Save share settings for form
+     */
+    public function saveShareSettings(Request $request, Form $form)
+    {
+        $this->authorize('update', $form);
+
+        $request->validate([
+            'custom_url' => 'nullable|string|max:255|unique:forms,custom_url,' . $form->id,
+            'is_embeddable' => 'boolean',
+            'embed_settings' => 'nullable|array',
+        ]);
+
+        $form->update([
+            'custom_url' => $request->custom_url ?: null,
+            'is_embeddable' => $request->is_embeddable ?? true,
+            'embed_settings' => $request->embed_settings,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Share settings saved successfully!'
+        ]);
+    }
 }

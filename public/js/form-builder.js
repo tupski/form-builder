@@ -82,10 +82,18 @@ function initializeTabs() {
                 document.getElementById('tab-title').textContent = 'Form Fields';
                 document.getElementById('save-form').classList.remove('hidden');
                 document.getElementById('save-conditions').classList.add('hidden');
+                document.getElementById('save-share-settings').classList.add('hidden');
             } else if (tabName === 'conditions') {
                 document.getElementById('tab-title').textContent = 'Conditional Logic';
                 document.getElementById('save-form').classList.add('hidden');
                 document.getElementById('save-conditions').classList.remove('hidden');
+                document.getElementById('save-share-settings').classList.add('hidden');
+            } else if (tabName === 'share') {
+                document.getElementById('tab-title').textContent = 'Share & Embed';
+                document.getElementById('save-form').classList.add('hidden');
+                document.getElementById('save-conditions').classList.add('hidden');
+                document.getElementById('save-share-settings').classList.remove('hidden');
+                updateEmbedCode(); // Update embed code when tab is opened
             }
         });
     });
@@ -583,3 +591,127 @@ function saveConditionalRules() {
         showMessage('Error saving conditional rules', 'error');
     });
 }
+
+// Share & Embed Functions
+function copyToClipboard(elementId) {
+    const element = document.getElementById(elementId);
+    element.select();
+    element.setSelectionRange(0, 99999); // For mobile devices
+
+    try {
+        document.execCommand('copy');
+        showMessage('Copied to clipboard!', 'success');
+    } catch (err) {
+        showMessage('Failed to copy to clipboard', 'error');
+    }
+}
+
+function generateShortUrl() {
+    const formId = window.location.pathname.split('/')[2];
+
+    fetch(`/forms/${formId}/generate-short-url`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById('short-url').value = data.url;
+            updateEmbedCode();
+            showMessage('Short URL generated successfully!', 'success');
+        } else {
+            showMessage('Error generating short URL', 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showMessage('Error generating short URL', 'error');
+    });
+}
+
+function updateEmbedCode() {
+    const width = document.getElementById('embed-width').value || '100%';
+    const height = document.getElementById('embed-height').value || '600px';
+
+    // Get the best URL to use (short URL if available, otherwise custom URL, otherwise default)
+    let embedUrl;
+    const shortUrl = document.getElementById('short-url').value;
+    const customUrl = document.getElementById('custom-url').value;
+    const defaultUrl = document.getElementById('default-url').value;
+
+    if (shortUrl) {
+        embedUrl = shortUrl;
+    } else if (customUrl) {
+        embedUrl = window.location.origin + '/f/' + customUrl;
+    } else {
+        embedUrl = defaultUrl;
+    }
+
+    const embedCode = `<iframe src="${embedUrl}" width="${width}" height="${height}" frameborder="0" style="border: none;"></iframe>`;
+    document.getElementById('embed-code').value = embedCode;
+}
+
+function saveShareSettings() {
+    const formId = window.location.pathname.split('/')[2];
+    const customUrl = document.getElementById('custom-url').value;
+    const isEmbeddable = document.getElementById('is-embeddable').checked;
+    const hideHeader = document.getElementById('hide-header').checked;
+    const transparentBg = document.getElementById('transparent-bg').checked;
+
+    const embedSettings = {
+        hide_header: hideHeader,
+        transparent_bg: transparentBg
+    };
+
+    fetch(`/forms/${formId}/share-settings`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify({
+            custom_url: customUrl,
+            is_embeddable: isEmbeddable,
+            embed_settings: embedSettings
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showMessage(data.message, 'success');
+            updateEmbedCode();
+        } else {
+            showMessage('Error saving share settings', 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showMessage('Error saving share settings', 'error');
+    });
+}
+
+// Initialize share settings when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    // Add event listener for save share settings button
+    const saveShareButton = document.getElementById('save-share-settings');
+    if (saveShareButton) {
+        saveShareButton.addEventListener('click', saveShareSettings);
+    }
+
+    // Add event listeners for embed code updates
+    const embedWidth = document.getElementById('embed-width');
+    const embedHeight = document.getElementById('embed-height');
+    const customUrlInput = document.getElementById('custom-url');
+
+    if (embedWidth) embedWidth.addEventListener('input', updateEmbedCode);
+    if (embedHeight) embedHeight.addEventListener('input', updateEmbedCode);
+    if (customUrlInput) customUrlInput.addEventListener('input', updateEmbedCode);
+
+    // Initial embed code update
+    if (document.getElementById('embed-code')) {
+        updateEmbedCode();
+    }
+});

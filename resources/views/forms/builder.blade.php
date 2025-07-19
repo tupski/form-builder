@@ -104,12 +104,15 @@
                         <!-- Form Builder Area -->
                         <div class="col-span-6">
                             <!-- Tabs -->
-                            <div class="flex border-b border-gray-200 mb-4">
-                                <button class="tab-button active px-4 py-2 text-sm font-medium text-blue-600 border-b-2 border-blue-600" data-tab="fields">
-                                    Form Fields
+                            <div class="flex flex-wrap border-b border-gray-200 mb-4">
+                                <button class="tab-button active px-3 py-2 text-xs sm:text-sm font-medium text-blue-600 border-b-2 border-blue-600" data-tab="fields">
+                                    Fields
                                 </button>
-                                <button class="tab-button px-4 py-2 text-sm font-medium text-gray-500 hover:text-gray-700" data-tab="conditions">
-                                    Conditional Logic
+                                <button class="tab-button px-3 py-2 text-xs sm:text-sm font-medium text-gray-500 hover:text-gray-700" data-tab="conditions">
+                                    Logic
+                                </button>
+                                <button class="tab-button px-3 py-2 text-xs sm:text-sm font-medium text-gray-500 hover:text-gray-700" data-tab="share">
+                                    Share & Embed
                                 </button>
                             </div>
 
@@ -121,6 +124,9 @@
                                     </button>
                                     <button id="save-conditions" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded hidden">
                                         Save Conditions
+                                    </button>
+                                    <button id="save-share-settings" class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded hidden">
+                                        Save Settings
                                     </button>
                                 </div>
                             </div>
@@ -153,6 +159,113 @@
                                         <div id="no-conditions" class="text-center py-8 text-gray-500">
                                             <p>No conditional rules defined.</p>
                                             <p class="text-sm mt-1">Add rules to show/hide fields based on other field values.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Share & Embed Tab Content -->
+                            <div id="share-tab" class="tab-content hidden">
+                                <div class="bg-white border border-gray-300 rounded-lg p-4 space-y-6">
+                                    <!-- Form URLs -->
+                                    <div>
+                                        <h3 class="text-lg font-semibold mb-4">Form URLs</h3>
+
+                                        <!-- Default URL -->
+                                        <div class="mb-4">
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">Default URL</label>
+                                            <div class="flex">
+                                                <input type="text" id="default-url" value="{{ route('form.show', $form->slug) }}"
+                                                       class="flex-1 px-3 py-2 border border-gray-300 rounded-l-md bg-gray-50" readonly>
+                                                <button onclick="copyToClipboard('default-url')"
+                                                        class="px-4 py-2 bg-blue-500 text-white rounded-r-md hover:bg-blue-600">
+                                                    Copy
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <!-- Custom URL -->
+                                        <div class="mb-4">
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">Custom URL</label>
+                                            <div class="flex">
+                                                <span class="px-3 py-2 bg-gray-100 border border-r-0 border-gray-300 rounded-l-md text-sm">{{ url('/f/') }}/</span>
+                                                <input type="text" id="custom-url" value="{{ $form->custom_url }}"
+                                                       placeholder="my-custom-form"
+                                                       class="flex-1 px-3 py-2 border border-gray-300 rounded-r-md">
+                                            </div>
+                                            <p class="text-xs text-gray-500 mt-1">Leave empty to use default URL</p>
+                                        </div>
+
+                                        <!-- Short URL -->
+                                        <div class="mb-4">
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">Short URL</label>
+                                            <div class="flex">
+                                                <input type="text" id="short-url"
+                                                       value="{{ $form->short_url ? url('/f/' . $form->short_url) : '' }}"
+                                                       class="flex-1 px-3 py-2 border border-gray-300 rounded-l-md bg-gray-50" readonly>
+                                                <button onclick="generateShortUrl()"
+                                                        class="px-4 py-2 bg-green-500 text-white rounded-r-md hover:bg-green-600">
+                                                    {{ $form->short_url ? 'Regenerate' : 'Generate' }}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Embed Code -->
+                                    <div>
+                                        <h3 class="text-lg font-semibold mb-4">Embed Code</h3>
+
+                                        <div class="mb-4">
+                                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                                                <div>
+                                                    <label class="block text-sm font-medium text-gray-700 mb-1">Width</label>
+                                                    <input type="text" id="embed-width" value="100%"
+                                                           class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                                                </div>
+                                                <div>
+                                                    <label class="block text-sm font-medium text-gray-700 mb-1">Height</label>
+                                                    <input type="text" id="embed-height" value="600px"
+                                                           class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                                                </div>
+                                            </div>
+
+                                            <textarea id="embed-code" rows="4"
+                                                      class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50 font-mono text-sm"
+                                                      readonly></textarea>
+
+                                            <div class="flex justify-between mt-2">
+                                                <button onclick="updateEmbedCode()"
+                                                        class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 text-sm">
+                                                    Update Code
+                                                </button>
+                                                <button onclick="copyToClipboard('embed-code')"
+                                                        class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 text-sm">
+                                                    Copy Code
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Embed Settings -->
+                                    <div>
+                                        <h3 class="text-lg font-semibold mb-4">Embed Settings</h3>
+
+                                        <div class="space-y-3">
+                                            <label class="flex items-center">
+                                                <input type="checkbox" id="is-embeddable" {{ $form->is_embeddable ? 'checked' : '' }}
+                                                       class="mr-2">
+                                                <span class="text-sm">Allow form to be embedded</span>
+                                            </label>
+
+                                            <label class="flex items-center">
+                                                <input type="checkbox" id="hide-header" class="mr-2">
+                                                <span class="text-sm">Hide form header in embed</span>
+                                            </label>
+
+                                            <label class="flex items-center">
+                                                <input type="checkbox" id="transparent-bg" class="mr-2">
+                                                <span class="text-sm">Transparent background</span>
+                                            </label>
                                         </div>
                                     </div>
                                 </div>

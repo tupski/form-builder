@@ -12,15 +12,15 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" data-spa>
+                        {{ __t('nav.dashboard', 'Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('forms.index')" :active="request()->routeIs('forms.*')">
-                        {{ __('My Forms') }}
+                    <x-nav-link :href="route('forms.index')" :active="request()->routeIs('forms.*')" data-spa>
+                        {{ __t('nav.my_forms', 'My Forms') }}
                     </x-nav-link>
                     @if(Auth::user()->isAdmin())
-                        <x-nav-link :href="route('admin.forms.index')" :active="request()->routeIs('admin.*')">
-                            {{ __('Admin') }}
+                        <x-nav-link :href="route('admin.forms.index')" :active="request()->routeIs('admin.*')" data-spa>
+                            {{ __t('nav.admin', 'Admin') }}
                         </x-nav-link>
                     @endif
                 </div>

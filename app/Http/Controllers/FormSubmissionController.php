@@ -89,4 +89,30 @@ class FormSubmissionController extends Controller
         $submissions = FormSubmission::with('form')->latest()->paginate(20);
         return view('admin.submissions.index', compact('submissions'));
     }
+
+    /**
+     * Show form by custom URL or short URL
+     */
+    public function showByUrl($url)
+    {
+        $form = Form::where('custom_url', $url)
+                   ->orWhere('short_url', $url)
+                   ->where('is_active', true)
+                   ->firstOrFail();
+
+        return $this->show($form);
+    }
+
+    /**
+     * Store form submission by custom URL or short URL
+     */
+    public function storeByUrl(Request $request, $url)
+    {
+        $form = Form::where('custom_url', $url)
+                   ->orWhere('short_url', $url)
+                   ->where('is_active', true)
+                   ->firstOrFail();
+
+        return $this->store($request, $form);
+    }
 }

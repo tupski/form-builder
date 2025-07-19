@@ -19,12 +19,18 @@ class Form extends Model
         'success_message',
         'is_active',
         'slug',
-        'settings'
+        'custom_url',
+        'short_url',
+        'is_embeddable',
+        'settings',
+        'embed_settings'
     ];
 
     protected $casts = [
         'settings' => 'array',
+        'embed_settings' => 'array',
         'is_active' => 'boolean',
+        'is_embeddable' => 'boolean',
     ];
 
     protected static function boot()
@@ -61,5 +67,39 @@ class Form extends Model
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    public function generateShortUrl()
+    {
+        do {
+            $shortUrl = Str::random(5);
+        } while (static::where('short_url', $shortUrl)->exists());
+
+        $this->update(['short_url' => $shortUrl]);
+        return $shortUrl;
+    }
+
+    public function getPublicUrl()
+    {
+        if ($this->custom_url) {
+            return url('/f/' . $this->custom_url);
+        }
+
+        if ($this->short_url) {
+            return url('/f/' . $this->short_url);
+        }
+
+        return route('form.show', $this->slug);
+    }
+
+    public function getEmbedCode($width = '100%', $height = '600px')
+    {
+        $url = $this->getPublicUrl();
+        return '<iframe src="' . $url . '" width="' . $width . '" height="' . $height . '" frameborder="0" style="border: none;"></iframe>';
+    }
+
+    public function getShareableUrl()
+    {
+        return $this->short_url ? url('/f/' . $this->short_url) : $this->getPublicUrl();
     }
 }
