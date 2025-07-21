@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ __t('app.name', 'Form Builder') }} - Create Beautiful Forms</title>
     <meta name="description" content="Create beautiful, responsive forms with drag & drop builder, conditional logic, and powerful analytics.">
-    
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-    
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="antialiased bg-white">
@@ -20,10 +20,18 @@
                 <div class="flex items-center">
                     <h1 class="text-xl sm:text-2xl font-bold text-blue-600">{{ __t('app.name', 'Form Builder') }}</h1>
                 </div>
-                
+
                 <div class="flex items-center space-x-2 sm:space-x-4">
                     @auth
-                        <a href="{{ route('dashboard') }}" class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium">Dashboard</a>
+                        <div class="flex items-center space-x-3">
+                            <span class="text-gray-700 text-sm">Welcome, {{ Auth::user()->name }}</span>
+                            <a href="{{ route('dashboard') }}" class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium">Dashboard</a>
+                            <a href="{{ route('forms.index') }}" class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium">My Forms</a>
+                            <form method="POST" action="{{ route('logout') }}" class="inline">
+                                @csrf
+                                <button type="submit" class="text-gray-700 hover:text-red-600 px-3 py-2 text-sm font-medium">Logout</button>
+                            </form>
+                        </div>
                     @else
                         <a href="{{ route('login') }}" class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium">Login</a>
                         <a href="{{ route('register') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition duration-200">Get Started</a>
@@ -44,7 +52,7 @@
                 <p class="text-lg sm:text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
                     Build professional forms with our drag & drop builder. Add conditional logic, custom styling, and powerful analytics. No coding required.
                 </p>
-                
+
                 <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
                     @guest
                         <a href="{{ route('register') }}" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg text-lg font-semibold transition duration-200 shadow-lg">
@@ -149,7 +157,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4">Ready to Get Started?</h2>
             <p class="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">Join thousands of users who trust our form builder for their business needs.</p>
-            
+
             @guest
                 <a href="{{ route('register') }}" class="inline-block bg-white hover:bg-gray-100 text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold transition duration-200 shadow-lg">
                     Create Your First Form
@@ -170,7 +178,7 @@
                     <h3 class="text-2xl font-bold mb-4">{{ __t('app.name', 'Form Builder') }}</h3>
                     <p class="text-gray-400 mb-4">Create beautiful, responsive forms with ease. Perfect for businesses, surveys, and data collection.</p>
                 </div>
-                
+
                 <div>
                     <h4 class="text-lg font-semibold mb-4">Product</h4>
                     <ul class="space-y-2 text-gray-400">
@@ -178,7 +186,7 @@
                         <li><a href="{{ route('register') }}" class="hover:text-white transition duration-200">Get Started</a></li>
                     </ul>
                 </div>
-                
+
                 <div>
                     <h4 class="text-lg font-semibold mb-4">Support</h4>
                     <ul class="space-y-2 text-gray-400">
@@ -187,7 +195,7 @@
                     </ul>
                 </div>
             </div>
-            
+
             <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
                 <p>&copy; {{ date('Y') }} {{ __t('app.name', 'Form Builder') }}. All rights reserved.</p>
             </div>
