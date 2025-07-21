@@ -5,27 +5,45 @@ let conditionalRules = [];
 let ruleCounter = 0;
 
 function initializeFormBuilder() {
+    console.log('Initializing Form Builder...');
+
     // Initialize tabs
     initializeTabs();
+
     // Initialize drag and drop for field types
     const fieldTypes = document.getElementById('field-types');
     const formFields = document.getElementById('form-fields');
     const dropZone = document.getElementById('drop-zone');
+    const emptyState = document.getElementById('empty-state');
+
+    if (!fieldTypes || !formFields || !dropZone) {
+        console.error('Required elements not found:', { fieldTypes, formFields, dropZone });
+        return;
+    }
+
+    console.log('Elements found, initializing sortable...');
 
     // Make field types draggable
-    new Sortable(fieldTypes, {
+    const fieldTypeSortable = new Sortable(fieldTypes, {
         group: {
             name: 'shared',
             pull: 'clone',
             put: false
         },
         sort: false,
+        animation: 150,
+        ghostClass: 'sortable-ghost',
+        chosenClass: 'sortable-chosen',
+        dragClass: 'sortable-drag',
+        onStart: function(evt) {
+            console.log('Drag started:', evt.item.getAttribute('data-type'));
+            evt.item.classList.add('dragging');
+            dropZone.classList.add('drag-over');
+        },
         onEnd: function(evt) {
-            if (evt.to === formFields) {
-                const fieldType = evt.item.dataset.type;
-                addField(fieldType);
-                evt.item.remove(); // Remove the cloned item
-            }
+            console.log('Drag ended');
+            evt.item.classList.remove('dragging');
+            dropZone.classList.remove('drag-over');
         }
     });
 
@@ -33,24 +51,53 @@ function initializeFormBuilder() {
     sortable = new Sortable(formFields, {
         group: 'shared',
         animation: 150,
+        ghostClass: 'sortable-ghost',
+        chosenClass: 'sortable-chosen',
+        dragClass: 'sortable-drag',
         onAdd: function(evt) {
-            const fieldType = evt.item.dataset.type;
-            addField(fieldType);
-            evt.item.remove();
+            console.log('Field added to form:', evt.item.getAttribute('data-type'));
+            const fieldType = evt.item.getAttribute('data-type');
+            if (fieldType) {
+                addField(fieldType);
+                evt.item.remove();
+                hideEmptyState();
+            }
         },
         onEnd: function(evt) {
+            console.log('Field reordered');
             updateFieldOrder();
+        },
+        onRemove: function(evt) {
+            console.log('Field removed');
+            if (formFields.children.length === 0) {
+                showEmptyState();
+            }
         }
     });
+
+    console.log('Sortable initialized successfully');
 
     // Save form button
     document.getElementById('save-form').addEventListener('click', saveForm);
 
     // Save conditions button
     document.getElementById('save-conditions').addEventListener('click', saveConditionalRules);
+}
 
-    // Add condition button
-    document.getElementById('add-condition').addEventListener('click', addConditionalRule);
+// Helper functions for empty state
+function hideEmptyState() {
+    const emptyState = document.getElementById('empty-state');
+    if (emptyState) {
+        emptyState.style.display = 'none';
+    }
+}
+
+function showEmptyState() {
+    const emptyState = document.getElementById('empty-state');
+    const formFields = document.getElementById('form-fields');
+    if (emptyState && formFields && formFields.children.length === 0) {
+        emptyState.style.display = 'block';
+    }
 }
 
 function initializeTabs() {
@@ -203,21 +250,133 @@ function createFieldPreview(type, name, label) {
                 <label class="block text-sm font-medium text-gray-700 mb-1">${label}</label>
                 <input type="date" name="${name}" class="w-full px-3 py-2 border border-gray-300 rounded-md" disabled>
             `;
+        case 'password':
+            return `
+                <label class="block text-sm font-medium text-gray-700 mb-1">${label}</label>
+                <input type="password" name="${name}" class="w-full px-3 py-2 border border-gray-300 rounded-md" placeholder="Enter ${label.toLowerCase()}" disabled>
+            `;
+        case 'url':
+            return `
+                <label class="block text-sm font-medium text-gray-700 mb-1">${label}</label>
+                <input type="url" name="${name}" class="w-full px-3 py-2 border border-gray-300 rounded-md" placeholder="https://example.com" disabled>
+            `;
+        case 'tel':
+            return `
+                <label class="block text-sm font-medium text-gray-700 mb-1">${label}</label>
+                <input type="tel" name="${name}" class="w-full px-3 py-2 border border-gray-300 rounded-md" placeholder="+1 (555) 123-4567" disabled>
+            `;
+        case 'time':
+            return `
+                <label class="block text-sm font-medium text-gray-700 mb-1">${label}</label>
+                <input type="time" name="${name}" class="w-full px-3 py-2 border border-gray-300 rounded-md" disabled>
+            `;
+        case 'datetime':
+            return `
+                <label class="block text-sm font-medium text-gray-700 mb-1">${label}</label>
+                <input type="datetime-local" name="${name}" class="w-full px-3 py-2 border border-gray-300 rounded-md" disabled>
+            `;
+        case 'file':
+            return `
+                <label class="block text-sm font-medium text-gray-700 mb-1">${label}</label>
+                <input type="file" name="${name}" class="w-full px-3 py-2 border border-gray-300 rounded-md" disabled>
+            `;
+        case 'image':
+            return `
+                <label class="block text-sm font-medium text-gray-700 mb-1">${label}</label>
+                <input type="file" name="${name}" accept="image/*" class="w-full px-3 py-2 border border-gray-300 rounded-md" disabled>
+            `;
+        case 'header':
+            return `
+                <h2 class="text-xl font-bold text-gray-800 mb-2">${label}</h2>
+            `;
+        case 'paragraph':
+            return `
+                <p class="text-gray-600 mb-4">${label}</p>
+            `;
+        case 'divider':
+            return `
+                <hr class="border-gray-300 my-4">
+            `;
+        case 'rating':
+            return `
+                <label class="block text-sm font-medium text-gray-700 mb-2">${label}</label>
+                <div class="flex space-x-1">
+                    <span class="text-yellow-400 text-xl cursor-pointer">★</span>
+                    <span class="text-yellow-400 text-xl cursor-pointer">★</span>
+                    <span class="text-yellow-400 text-xl cursor-pointer">★</span>
+                    <span class="text-gray-300 text-xl cursor-pointer">★</span>
+                    <span class="text-gray-300 text-xl cursor-pointer">★</span>
+                </div>
+            `;
+        case 'range':
+            return `
+                <label class="block text-sm font-medium text-gray-700 mb-1">${label}</label>
+                <input type="range" name="${name}" min="0" max="100" class="w-full" disabled>
+                <div class="flex justify-between text-xs text-gray-500">
+                    <span>0</span>
+                    <span>100</span>
+                </div>
+            `;
+        case 'captcha':
+            return `
+                <label class="block text-sm font-medium text-gray-700 mb-2">${label}</label>
+                <div class="bg-gray-100 border border-gray-300 rounded p-4 text-center">
+                    <span class="text-gray-500">🛡️ Captcha Verification</span>
+                </div>
+            `;
+        case 'signature':
+            return `
+                <label class="block text-sm font-medium text-gray-700 mb-2">${label}</label>
+                <div class="bg-gray-50 border border-gray-300 rounded p-4 h-24 text-center flex items-center justify-center">
+                    <span class="text-gray-500">✍️ Signature Area</span>
+                </div>
+            `;
+        case 'color':
+            return `
+                <label class="block text-sm font-medium text-gray-700 mb-1">${label}</label>
+                <input type="color" name="${name}" class="w-16 h-10 border border-gray-300 rounded" disabled>
+            `;
         default:
-            return `<p>Unknown field type: ${type}</p>`;
+            return `<p class="text-red-500">Unknown field type: ${type}</p>`;
     }
 }
 
 function getFieldConfig(type) {
     const configs = {
+        // Basic Input Fields
         'text': { label: 'Text Input', icon: '📝' },
         'email': { label: 'Email', icon: '📧' },
-        'number': { label: 'Number', icon: '🔢' },
         'textarea': { label: 'Textarea', icon: '📄' },
+        'number': { label: 'Number', icon: '🔢' },
+        'password': { label: 'Password', icon: '🔒' },
+        'url': { label: 'URL', icon: '🔗' },
+        'tel': { label: 'Phone', icon: '�' },
+
+        // Selection Fields
         'select': { label: 'Select Dropdown', icon: '📋' },
         'radio': { label: 'Radio Buttons', icon: '🔘' },
         'checkbox': { label: 'Checkboxes', icon: '☑️' },
-        'date': { label: 'Date', icon: '📅' }
+
+        // Date & Time Fields
+        'date': { label: 'Date', icon: '📅' },
+        'time': { label: 'Time', icon: '🕐' },
+        'datetime': { label: 'Date & Time', icon: '📅🕐' },
+
+        // File & Media Fields
+        'file': { label: 'File Upload', icon: '📎' },
+        'image': { label: 'Image Upload', icon: '🖼️' },
+
+        // Content Fields
+        'header': { label: 'Header', icon: '📰' },
+        'paragraph': { label: 'Paragraph', icon: '📝' },
+        'divider': { label: 'Divider', icon: '➖' },
+
+        // Advanced Fields
+        'rating': { label: 'Rating', icon: '⭐' },
+        'range': { label: 'Range Slider', icon: '🎚️' },
+        'captcha': { label: 'Captcha', icon: '🛡️' },
+        'signature': { label: 'Signature', icon: '✍️' },
+        'color': { label: 'Color Picker', icon: '🎨' }
     };
     return configs[type] || { label: 'Unknown', icon: '❓' };
 }

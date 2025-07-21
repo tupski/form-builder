@@ -33,69 +33,171 @@
                         <!-- Field Types Panel -->
                         <div class="col-span-3">
                             <h3 class="text-lg font-semibold mb-4">Field Types</h3>
-                            <div class="space-y-2" id="field-types">
-                                <div class="field-type bg-blue-100 border border-blue-300 rounded p-3 cursor-move hover:bg-blue-200" data-type="text">
+                            <div class="space-y-2 max-h-96 overflow-y-auto" id="field-types">
+                                <!-- Basic Input Fields -->
+                                <div class="field-type bg-blue-100 border border-blue-300 rounded p-2 cursor-move hover:bg-blue-200 transition duration-200" data-type="text" draggable="true">
                                     <div class="flex items-center">
-                                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"></path>
-                                        </svg>
-                                        Text Input
+                                        <i class="fas fa-font text-blue-600 mr-2 text-sm"></i>
+                                        <span class="text-sm font-medium text-blue-800">Text Input</span>
                                     </div>
                                 </div>
-                                <div class="field-type bg-blue-100 border border-blue-300 rounded p-3 cursor-move hover:bg-blue-200" data-type="email">
+
+                                <div class="field-type bg-green-100 border border-green-300 rounded p-2 cursor-move hover:bg-green-200 transition duration-200" data-type="email" draggable="true">
                                     <div class="flex items-center">
-                                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"></path>
-                                        </svg>
-                                        Email
+                                        <i class="fas fa-envelope text-green-600 mr-2 text-sm"></i>
+                                        <span class="text-sm font-medium text-green-800">Email</span>
                                     </div>
                                 </div>
-                                <div class="field-type bg-blue-100 border border-blue-300 rounded p-3 cursor-move hover:bg-blue-200" data-type="number">
+
+                                <div class="field-type bg-yellow-100 border border-yellow-300 rounded p-2 cursor-move hover:bg-yellow-200 transition duration-200" data-type="textarea" draggable="true">
                                     <div class="flex items-center">
-                                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"></path>
-                                        </svg>
-                                        Number
+                                        <i class="fas fa-align-left text-yellow-600 mr-2 text-sm"></i>
+                                        <span class="text-sm font-medium text-yellow-800">Textarea</span>
                                     </div>
                                 </div>
-                                <div class="field-type bg-blue-100 border border-blue-300 rounded p-3 cursor-move hover:bg-blue-200" data-type="textarea">
+
+                                <div class="field-type bg-pink-100 border border-pink-300 rounded p-2 cursor-move hover:bg-pink-200 transition duration-200" data-type="number" draggable="true">
                                     <div class="flex items-center">
-                                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
-                                        </svg>
-                                        Textarea
+                                        <i class="fas fa-hashtag text-pink-600 mr-2 text-sm"></i>
+                                        <span class="text-sm font-medium text-pink-800">Number</span>
                                     </div>
                                 </div>
-                                <div class="field-type bg-blue-100 border border-blue-300 rounded p-3 cursor-move hover:bg-blue-200" data-type="select">
+
+                                <div class="field-type bg-orange-100 border border-orange-300 rounded p-2 cursor-move hover:bg-orange-200 transition duration-200" data-type="password" draggable="true">
                                     <div class="flex items-center">
-                                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4"></path>
-                                        </svg>
-                                        Select Dropdown
+                                        <i class="fas fa-lock text-orange-600 mr-2 text-sm"></i>
+                                        <span class="text-sm font-medium text-orange-800">Password</span>
                                     </div>
                                 </div>
-                                <div class="field-type bg-blue-100 border border-blue-300 rounded p-3 cursor-move hover:bg-blue-200" data-type="radio">
+
+                                <div class="field-type bg-cyan-100 border border-cyan-300 rounded p-2 cursor-move hover:bg-cyan-200 transition duration-200" data-type="url" draggable="true">
                                     <div class="flex items-center">
-                                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                        </svg>
-                                        Radio Buttons
+                                        <i class="fas fa-link text-cyan-600 mr-2 text-sm"></i>
+                                        <span class="text-sm font-medium text-cyan-800">URL</span>
                                     </div>
                                 </div>
-                                <div class="field-type bg-blue-100 border border-blue-300 rounded p-3 cursor-move hover:bg-blue-200" data-type="checkbox">
+
+                                <div class="field-type bg-lime-100 border border-lime-300 rounded p-2 cursor-move hover:bg-lime-200 transition duration-200" data-type="tel" draggable="true">
                                     <div class="flex items-center">
-                                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                        </svg>
-                                        Checkboxes
+                                        <i class="fas fa-phone text-lime-600 mr-2 text-sm"></i>
+                                        <span class="text-sm font-medium text-lime-800">Phone</span>
                                     </div>
                                 </div>
-                                <div class="field-type bg-blue-100 border border-blue-300 rounded p-3 cursor-move hover:bg-blue-200" data-type="date">
+
+                                <!-- Selection Fields -->
+                                <div class="field-type bg-purple-100 border border-purple-300 rounded p-2 cursor-move hover:bg-purple-200 transition duration-200" data-type="select" draggable="true">
                                     <div class="flex items-center">
-                                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                        </svg>
-                                        Date
+                                        <i class="fas fa-list text-purple-600 mr-2 text-sm"></i>
+                                        <span class="text-sm font-medium text-purple-800">Select</span>
+                                    </div>
+                                </div>
+
+                                <div class="field-type bg-red-100 border border-red-300 rounded p-2 cursor-move hover:bg-red-200 transition duration-200" data-type="radio" draggable="true">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-dot-circle text-red-600 mr-2 text-sm"></i>
+                                        <span class="text-sm font-medium text-red-800">Radio</span>
+                                    </div>
+                                </div>
+
+                                <div class="field-type bg-indigo-100 border border-indigo-300 rounded p-2 cursor-move hover:bg-indigo-200 transition duration-200" data-type="checkbox" draggable="true">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-check-square text-indigo-600 mr-2 text-sm"></i>
+                                        <span class="text-sm font-medium text-indigo-800">Checkbox</span>
+                                    </div>
+                                </div>
+
+                                <!-- Date & Time Fields -->
+                                <div class="field-type bg-teal-100 border border-teal-300 rounded p-2 cursor-move hover:bg-teal-200 transition duration-200" data-type="date" draggable="true">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-calendar text-teal-600 mr-2 text-sm"></i>
+                                        <span class="text-sm font-medium text-teal-800">Date</span>
+                                    </div>
+                                </div>
+
+                                <div class="field-type bg-emerald-100 border border-emerald-300 rounded p-2 cursor-move hover:bg-emerald-200 transition duration-200" data-type="time" draggable="true">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-clock text-emerald-600 mr-2 text-sm"></i>
+                                        <span class="text-sm font-medium text-emerald-800">Time</span>
+                                    </div>
+                                </div>
+
+                                <div class="field-type bg-violet-100 border border-violet-300 rounded p-2 cursor-move hover:bg-violet-200 transition duration-200" data-type="datetime" draggable="true">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-calendar-alt text-violet-600 mr-2 text-sm"></i>
+                                        <span class="text-sm font-medium text-violet-800">DateTime</span>
+                                    </div>
+                                </div>
+
+                                <!-- File & Media Fields -->
+                                <div class="field-type bg-rose-100 border border-rose-300 rounded p-2 cursor-move hover:bg-rose-200 transition duration-200" data-type="file" draggable="true">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-upload text-rose-600 mr-2 text-sm"></i>
+                                        <span class="text-sm font-medium text-rose-800">File Upload</span>
+                                    </div>
+                                </div>
+
+                                <div class="field-type bg-sky-100 border border-sky-300 rounded p-2 cursor-move hover:bg-sky-200 transition duration-200" data-type="image" draggable="true">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-image text-sky-600 mr-2 text-sm"></i>
+                                        <span class="text-sm font-medium text-sky-800">Image</span>
+                                    </div>
+                                </div>
+
+                                <!-- Content Fields -->
+                                <div class="field-type bg-amber-100 border border-amber-300 rounded p-2 cursor-move hover:bg-amber-200 transition duration-200" data-type="header" draggable="true">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-heading text-amber-600 mr-2 text-sm"></i>
+                                        <span class="text-sm font-medium text-amber-800">Header</span>
+                                    </div>
+                                </div>
+
+                                <div class="field-type bg-slate-100 border border-slate-300 rounded p-2 cursor-move hover:bg-slate-200 transition duration-200" data-type="paragraph" draggable="true">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-paragraph text-slate-600 mr-2 text-sm"></i>
+                                        <span class="text-sm font-medium text-slate-800">Paragraph</span>
+                                    </div>
+                                </div>
+
+                                <div class="field-type bg-neutral-100 border border-neutral-300 rounded p-2 cursor-move hover:bg-neutral-200 transition duration-200" data-type="divider" draggable="true">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-minus text-neutral-600 mr-2 text-sm"></i>
+                                        <span class="text-sm font-medium text-neutral-800">Divider</span>
+                                    </div>
+                                </div>
+
+                                <!-- Advanced Fields -->
+                                <div class="field-type bg-fuchsia-100 border border-fuchsia-300 rounded p-2 cursor-move hover:bg-fuchsia-200 transition duration-200" data-type="rating" draggable="true">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-star text-fuchsia-600 mr-2 text-sm"></i>
+                                        <span class="text-sm font-medium text-fuchsia-800">Rating</span>
+                                    </div>
+                                </div>
+
+                                <div class="field-type bg-stone-100 border border-stone-300 rounded p-2 cursor-move hover:bg-stone-200 transition duration-200" data-type="range" draggable="true">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-sliders-h text-stone-600 mr-2 text-sm"></i>
+                                        <span class="text-sm font-medium text-stone-800">Range</span>
+                                    </div>
+                                </div>
+
+                                <div class="field-type bg-red-200 border border-red-400 rounded p-2 cursor-move hover:bg-red-300 transition duration-200" data-type="captcha" draggable="true">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-shield-alt text-red-700 mr-2 text-sm"></i>
+                                        <span class="text-sm font-medium text-red-900">Captcha</span>
+                                    </div>
+                                </div>
+
+                                <div class="field-type bg-green-200 border border-green-400 rounded p-2 cursor-move hover:bg-green-300 transition duration-200" data-type="signature" draggable="true">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-signature text-green-700 mr-2 text-sm"></i>
+                                        <span class="text-sm font-medium text-green-900">Signature</span>
+                                    </div>
+                                </div>
+
+                                <div class="field-type bg-blue-200 border border-blue-400 rounded p-2 cursor-move hover:bg-blue-300 transition duration-200" data-type="color" draggable="true">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-palette text-blue-700 mr-2 text-sm"></i>
+                                        <span class="text-sm font-medium text-blue-900">Color</span>
                                     </div>
                                 </div>
                             </div>
