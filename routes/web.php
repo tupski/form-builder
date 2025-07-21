@@ -10,6 +10,10 @@ Route::get('/', function () {
     return view('landing');
 })->name('landing');
 
+Route::get('/test-styles', function () {
+    return view('test-styles');
+})->name('test-styles');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

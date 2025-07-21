@@ -14,22 +14,26 @@ class LanguageSeeder extends Seeder
     public function run(): void
     {
         // Create English language (default)
-        $english = Language::create([
-            'code' => 'en',
-            'name' => 'English',
-            'native_name' => 'English',
-            'is_active' => true,
-            'is_default' => true,
-        ]);
+        $english = Language::updateOrCreate(
+            ['code' => 'en'],
+            [
+                'name' => 'English',
+                'native_name' => 'English',
+                'is_active' => true,
+                'is_default' => true,
+            ]
+        );
 
         // Create Indonesian language
-        $indonesian = Language::create([
-            'code' => 'id',
-            'name' => 'Indonesian',
-            'native_name' => 'Bahasa Indonesia',
-            'is_active' => true,
-            'is_default' => false,
-        ]);
+        $indonesian = Language::updateOrCreate(
+            ['code' => 'id'],
+            [
+                'name' => 'Indonesian',
+                'native_name' => 'Bahasa Indonesia',
+                'is_active' => true,
+                'is_default' => false,
+            ]
+        );
 
         // English translations
         $englishTranslations = [
@@ -63,11 +67,10 @@ class LanguageSeeder extends Seeder
         ];
 
         foreach ($englishTranslations as $key => $value) {
-            Translation::create([
-                'language_id' => $english->id,
-                'key' => $key,
-                'value' => $value,
-            ]);
+            Translation::updateOrCreate(
+                ['language_id' => $english->id, 'key' => $key],
+                ['value' => $value]
+            );
         }
 
         // Indonesian translations
@@ -102,11 +105,10 @@ class LanguageSeeder extends Seeder
         ];
 
         foreach ($indonesianTranslations as $key => $value) {
-            Translation::create([
-                'language_id' => $indonesian->id,
-                'key' => $key,
-                'value' => $value,
-            ]);
+            Translation::updateOrCreate(
+                ['language_id' => $indonesian->id, 'key' => $key],
+                ['value' => $value]
+            );
         }
     }
 }
