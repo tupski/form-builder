@@ -147,70 +147,110 @@
                 return;
             }
 
-            addDebugMessage('✅ Elements found, initializing sortable...');
+            addDebugMessage('✅ Elements found, initializing interactions...');
 
-            // Make field types draggable
-            const fieldTypeSortable = new Sortable(fieldTypes, {
-                group: {
-                    name: 'formBuilder',
-                    pull: 'clone',
-                    put: false
-                },
-                sort: false,
-                animation: 150,
-                forceFallback: true,
-                fallbackClass: 'sortable-fallback',
-                ghostClass: 'sortable-ghost',
-                chosenClass: 'sortable-chosen',
-                dragClass: 'sortable-drag',
-                onStart: function(evt) {
-                    const fieldType = evt.item.getAttribute('data-type');
-                    addDebugMessage(`🚀 Drag started: ${fieldType}`);
-                    evt.item.classList.add('dragging');
-                    dropZone.classList.add('drag-over');
-                    document.body.classList.add('dragging-field');
-                },
-                onEnd: function(evt) {
-                    addDebugMessage('🏁 Drag ended');
-                    evt.item.classList.remove('dragging');
-                    dropZone.classList.remove('drag-over');
-                    document.body.classList.remove('dragging-field');
-                }
-            });
-
-            // Make form fields sortable
-            const formFieldsSortable = new Sortable(formFields, {
-                group: {
-                    name: 'formBuilder',
-                    pull: true,
-                    put: true
-                },
-                animation: 150,
-                forceFallback: true,
-                fallbackClass: 'sortable-fallback',
-                ghostClass: 'sortable-ghost',
-                chosenClass: 'sortable-chosen',
-                dragClass: 'sortable-drag',
-                onAdd: function(evt) {
-                    const fieldType = evt.item.getAttribute('data-type');
-                    addDebugMessage(`➕ Field added: ${fieldType}`);
-
+            // Add click functionality to field types (PRIMARY METHOD)
+            const fieldTypeElements = fieldTypes.querySelectorAll('.field-type');
+            fieldTypeElements.forEach(function(element) {
+                // Add click event
+                element.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const fieldType = this.getAttribute('data-type');
+                    addDebugMessage(`👆 Field type clicked: ${fieldType}`);
                     if (fieldType) {
                         addField(fieldType);
-                        evt.item.remove();
                         hideEmptyState();
+                        // Add visual feedback
+                        this.style.transform = 'scale(0.95)';
+                        setTimeout(() => {
+                            this.style.transform = '';
+                        }, 150);
                     }
-                },
-                onUpdate: function(evt) {
-                    addDebugMessage('🔄 Field reordered');
-                },
-                onRemove: function(evt) {
-                    addDebugMessage('➖ Field removed');
-                    if (formFields.children.length === 0) {
-                        showEmptyState();
-                    }
-                }
+                });
+
+                // Add hover effect
+                element.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px)';
+                    this.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+                });
+
+                element.addEventListener('mouseleave', function() {
+                    this.style.transform = '';
+                    this.style.boxShadow = '';
+                });
             });
+
+            addDebugMessage('✅ Click functionality added to all field types');
+
+            // Make field types draggable (BACKUP METHOD)
+            try {
+                const fieldTypeSortable = new Sortable(fieldTypes, {
+                    group: {
+                        name: 'formBuilder',
+                        pull: 'clone',
+                        put: false
+                    },
+                    sort: false,
+                    animation: 150,
+                    ghostClass: 'sortable-ghost',
+                    chosenClass: 'sortable-chosen',
+                    dragClass: 'sortable-drag',
+                    onStart: function(evt) {
+                        const fieldType = evt.item.getAttribute('data-type');
+                        addDebugMessage(`🚀 Drag started: ${fieldType}`);
+                        evt.item.classList.add('dragging');
+                        dropZone.classList.add('drag-over');
+                        document.body.classList.add('dragging-field');
+                    },
+                    onEnd: function(evt) {
+                        addDebugMessage('🏁 Drag ended');
+                        evt.item.classList.remove('dragging');
+                        dropZone.classList.remove('drag-over');
+                        document.body.classList.remove('dragging-field');
+                    }
+                });
+                addDebugMessage('✅ Drag and drop initialized as backup');
+            } catch (error) {
+                addDebugMessage('⚠️ Drag and drop not available, using click only');
+            }
+
+            // Make form fields sortable (for reordering existing fields)
+            try {
+                const formFieldsSortable = new Sortable(formFields, {
+                    group: {
+                        name: 'formBuilder',
+                        pull: true,
+                        put: true
+                    },
+                    animation: 150,
+                    ghostClass: 'sortable-ghost',
+                    chosenClass: 'sortable-chosen',
+                    dragClass: 'sortable-drag',
+                    onAdd: function(evt) {
+                        const fieldType = evt.item.getAttribute('data-type');
+                        addDebugMessage(`➕ Field added via drag: ${fieldType}`);
+
+                        if (fieldType) {
+                            addField(fieldType);
+                            evt.item.remove();
+                            hideEmptyState();
+                        }
+                    },
+                    onUpdate: function(evt) {
+                        addDebugMessage('🔄 Field reordered');
+                    },
+                    onRemove: function(evt) {
+                        addDebugMessage('➖ Field removed');
+                        if (formFields.children.length === 0) {
+                            showEmptyState();
+                        }
+                    }
+                });
+                addDebugMessage('✅ Form fields sortable initialized');
+            } catch (error) {
+                addDebugMessage('⚠️ Form fields sortable not available');
+            }
 
             function addField(type) {
                 fieldCounter++;

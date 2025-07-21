@@ -23,73 +23,106 @@ function initializeFormBuilder() {
 
     console.log('Elements found, initializing sortable...');
 
-    // Make field types draggable
-    const fieldTypeSortable = new Sortable(fieldTypes, {
-        group: {
-            name: 'formBuilder',
-            pull: 'clone',
-            put: false
-        },
-        sort: false,
-        animation: 150,
-        forceFallback: true,
-        fallbackClass: 'sortable-fallback',
-        ghostClass: 'sortable-ghost',
-        chosenClass: 'sortable-chosen',
-        dragClass: 'sortable-drag',
-        onStart: function(evt) {
-            console.log('Drag started:', evt.item.getAttribute('data-type'));
-            evt.item.classList.add('dragging');
-            dropZone.classList.add('drag-over');
+    // Add click functionality to field types
+    const fieldTypeElements = fieldTypes.querySelectorAll('.field-type');
+    fieldTypeElements.forEach(function(element) {
+        // Add click event
+        element.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const fieldType = this.getAttribute('data-type');
+            console.log('Field type clicked:', fieldType);
+            if (fieldType) {
+                addField(fieldType);
+                hideEmptyState();
+                // Add visual feedback
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            }
+        });
 
-            // Add visual feedback
-            document.body.classList.add('dragging-field');
-        },
-        onEnd: function(evt) {
-            console.log('Drag ended');
-            evt.item.classList.remove('dragging');
-            dropZone.classList.remove('drag-over');
+        // Add hover effect
+        element.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-2px)';
+        });
 
-            // Remove visual feedback
-            document.body.classList.remove('dragging-field');
-        }
+        element.addEventListener('mouseleave', function() {
+            this.style.transform = '';
+        });
     });
+
+    // Make field types draggable (as backup)
+    try {
+        const fieldTypeSortable = new Sortable(fieldTypes, {
+            group: {
+                name: 'formBuilder',
+                pull: 'clone',
+                put: false
+            },
+            sort: false,
+            animation: 150,
+            ghostClass: 'sortable-ghost',
+            chosenClass: 'sortable-chosen',
+            dragClass: 'sortable-drag',
+            onStart: function(evt) {
+                console.log('Drag started:', evt.item.getAttribute('data-type'));
+                evt.item.classList.add('dragging');
+                if (dropZone) dropZone.classList.add('drag-over');
+                document.body.classList.add('dragging-field');
+            },
+            onEnd: function(evt) {
+                console.log('Drag ended');
+                evt.item.classList.remove('dragging');
+                if (dropZone) dropZone.classList.remove('drag-over');
+                document.body.classList.remove('dragging-field');
+            },
+            onClone: function(evt) {
+                console.log('Item cloned for drag');
+            }
+        });
+    } catch (error) {
+        console.warn('Drag and drop not available, using click only:', error);
+    }
 
     // Make form fields sortable and droppable
-    sortable = new Sortable(formFields, {
-        group: {
-            name: 'formBuilder',
-            pull: true,
-            put: true
-        },
-        animation: 150,
-        forceFallback: true,
-        fallbackClass: 'sortable-fallback',
-        ghostClass: 'sortable-ghost',
-        chosenClass: 'sortable-chosen',
-        dragClass: 'sortable-drag',
-        onAdd: function(evt) {
-            console.log('Field added to form:', evt.item.getAttribute('data-type'));
-            const fieldType = evt.item.getAttribute('data-type');
-            if (fieldType) {
-                // Create new field
-                addField(fieldType);
-                // Remove the dragged element
-                evt.item.remove();
-                hideEmptyState();
+    try {
+        sortable = new Sortable(formFields, {
+            group: {
+                name: 'formBuilder',
+                pull: true,
+                put: true
+            },
+            animation: 150,
+            ghostClass: 'sortable-ghost',
+            chosenClass: 'sortable-chosen',
+            dragClass: 'sortable-drag',
+            onAdd: function(evt) {
+                console.log('Field added to form:', evt.item.getAttribute('data-type'));
+                const fieldType = evt.item.getAttribute('data-type');
+                if (fieldType) {
+                    // Create new field
+                    addField(fieldType);
+                    // Remove the dragged element
+                    evt.item.remove();
+                    hideEmptyState();
+                }
+            },
+            onUpdate: function(evt) {
+                console.log('Field reordered');
+                updateFieldOrder();
+            },
+            onRemove: function(evt) {
+                console.log('Field removed');
+                if (formFields.children.length === 0) {
+                    showEmptyState();
+                }
             }
-        },
-        onUpdate: function(evt) {
-            console.log('Field reordered');
-            updateFieldOrder();
-        },
-        onRemove: function(evt) {
-            console.log('Field removed');
-            if (formFields.children.length === 0) {
-                showEmptyState();
-            }
-        }
-    });
+        });
+    } catch (error) {
+        console.warn('Form fields sortable not available:', error);
+    }
 
     console.log('Sortable initialized successfully');
 

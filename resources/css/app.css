@@ -109,8 +109,26 @@ body.dragging-field #form-fields {
 }
 
 #form-fields:empty::before {
-    content: "Drop fields here to build your form";
+    content: "Click or drop fields here to build your form";
     @apply text-gray-500 text-center;
+}
+
+/* Field type hover effects */
+.field-type {
+    @apply cursor-pointer transition-all duration-200;
+}
+
+.field-type:hover {
+    @apply transform -translate-y-1 shadow-md;
+}
+
+.field-type:active {
+    @apply transform scale-95;
+}
+
+/* Click feedback */
+.field-type.clicked {
+    @apply transform scale-95 bg-opacity-80;
 }
 
 .field-type {

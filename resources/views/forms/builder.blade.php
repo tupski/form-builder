@@ -32,7 +32,11 @@
                     <div class="grid grid-cols-12 gap-6">
                         <!-- Field Types Panel -->
                         <div class="col-span-3">
-                            <h3 class="text-lg font-semibold mb-4">Field Types</h3>
+                            <h3 class="text-lg font-semibold mb-2">Field Types</h3>
+                            <p class="text-xs text-gray-600 mb-4">
+                                <i class="fas fa-info-circle text-blue-500 mr-1"></i>
+                                Click or drag field types to add them to your form
+                            </p>
                             <div class="space-y-3 max-h-96 overflow-y-auto" id="field-types">
                                 <!-- 1. Field Teks -->
                                 <div class="field-category mb-4">
@@ -305,7 +309,12 @@
                                             <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                                             </svg>
-                                            <p class="mt-2">Drag field types here to build your form</p>
+                                            <p class="mt-2 text-lg font-medium">Click or drag field types here to build your form</p>
+                                            <p class="text-sm mt-1">Select field types from the left panel and click them or drag them here</p>
+                                            <div class="mt-4 flex justify-center space-x-4 text-xs text-gray-400">
+                                                <span><i class="fas fa-hand-pointer mr-1"></i>Click to add</span>
+                                                <span><i class="fas fa-arrows-alt mr-1"></i>Drag to add</span>
+                                            </div>
                                         </div>
                                         <div id="form-fields"></div>
                                     </div>
