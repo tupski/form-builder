@@ -14,6 +14,10 @@ Route::get('/test-styles', function () {
     return view('test-styles');
 })->name('test-styles');
 
+Route::get('/test-drag-drop', function () {
+    return view('test-drag-drop');
+})->name('test-drag-drop');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
