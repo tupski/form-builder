@@ -33,171 +33,235 @@
                         <!-- Field Types Panel -->
                         <div class="col-span-3">
                             <h3 class="text-lg font-semibold mb-4">Field Types</h3>
-                            <div class="space-y-2 max-h-96 overflow-y-auto" id="field-types">
-                                <!-- Basic Input Fields -->
-                                <div class="field-type bg-blue-100 border border-blue-300 rounded p-2 cursor-move hover:bg-blue-200 transition duration-200" data-type="text" draggable="true">
-                                    <div class="flex items-center">
-                                        <i class="fas fa-font text-blue-600 mr-2 text-sm"></i>
-                                        <span class="text-sm font-medium text-blue-800">Text Input</span>
+                            <div class="space-y-3 max-h-96 overflow-y-auto" id="field-types">
+                                <!-- 1. Field Teks -->
+                                <div class="field-category mb-4">
+                                    <h3 class="text-sm font-semibold text-gray-700 mb-2 flex items-center">
+                                        <i class="fas fa-font text-blue-600 mr-2"></i>
+                                        Field Teks
+                                    </h3>
+                                    <div class="space-y-1">
+                                        <div class="field-type bg-blue-50 border border-blue-200 rounded p-2 cursor-move hover:bg-blue-100 transition duration-200" data-type="text" draggable="true">
+                                            <div class="flex items-center">
+                                                <i class="fas fa-i-cursor text-blue-600 mr-2 text-sm"></i>
+                                                <span class="text-sm font-medium text-blue-800">Single Line Text</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="field-type bg-blue-50 border border-blue-200 rounded p-2 cursor-move hover:bg-blue-100 transition duration-200" data-type="textarea" draggable="true">
+                                            <div class="flex items-center">
+                                                <i class="fas fa-align-left text-blue-600 mr-2 text-sm"></i>
+                                                <span class="text-sm font-medium text-blue-800">Paragraph Text</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="field-type bg-blue-50 border border-blue-200 rounded p-2 cursor-move hover:bg-blue-100 transition duration-200" data-type="password" draggable="true">
+                                            <div class="flex items-center">
+                                                <i class="fas fa-lock text-blue-600 mr-2 text-sm"></i>
+                                                <span class="text-sm font-medium text-blue-800">Password</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="field-type bg-green-100 border border-green-300 rounded p-2 cursor-move hover:bg-green-200 transition duration-200" data-type="email" draggable="true">
-                                    <div class="flex items-center">
-                                        <i class="fas fa-envelope text-green-600 mr-2 text-sm"></i>
-                                        <span class="text-sm font-medium text-green-800">Email</span>
+                                <!-- 2. Angka dan Pilihan Terbatas -->
+                                <div class="field-category mb-4">
+                                    <h3 class="text-sm font-semibold text-gray-700 mb-2 flex items-center">
+                                        <i class="fas fa-list-ol text-green-600 mr-2"></i>
+                                        Angka dan Pilihan Terbatas
+                                    </h3>
+                                    <div class="space-y-1">
+                                        <div class="field-type bg-green-50 border border-green-200 rounded p-2 cursor-move hover:bg-green-100 transition duration-200" data-type="number" draggable="true">
+                                            <div class="flex items-center">
+                                                <i class="fas fa-hashtag text-green-600 mr-2 text-sm"></i>
+                                                <span class="text-sm font-medium text-green-800">Number</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="field-type bg-green-50 border border-green-200 rounded p-2 cursor-move hover:bg-green-100 transition duration-200" data-type="select" draggable="true">
+                                            <div class="flex items-center">
+                                                <i class="fas fa-chevron-down text-green-600 mr-2 text-sm"></i>
+                                                <span class="text-sm font-medium text-green-800">Dropdown / Select</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="field-type bg-green-50 border border-green-200 rounded p-2 cursor-move hover:bg-green-100 transition duration-200" data-type="radio" draggable="true">
+                                            <div class="flex items-center">
+                                                <i class="fas fa-dot-circle text-green-600 mr-2 text-sm"></i>
+                                                <span class="text-sm font-medium text-green-800">Radio Button</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="field-type bg-green-50 border border-green-200 rounded p-2 cursor-move hover:bg-green-100 transition duration-200" data-type="checkbox" draggable="true">
+                                            <div class="flex items-center">
+                                                <i class="fas fa-check-square text-green-600 mr-2 text-sm"></i>
+                                                <span class="text-sm font-medium text-green-800">Checkbox(es)</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="field-type bg-green-50 border border-green-200 rounded p-2 cursor-move hover:bg-green-100 transition duration-200" data-type="range" draggable="true">
+                                            <div class="flex items-center">
+                                                <i class="fas fa-sliders-h text-green-600 mr-2 text-sm"></i>
+                                                <span class="text-sm font-medium text-green-800">Range / Slider</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="field-type bg-yellow-100 border border-yellow-300 rounded p-2 cursor-move hover:bg-yellow-200 transition duration-200" data-type="textarea" draggable="true">
-                                    <div class="flex items-center">
-                                        <i class="fas fa-align-left text-yellow-600 mr-2 text-sm"></i>
-                                        <span class="text-sm font-medium text-yellow-800">Textarea</span>
+                                <!-- 3. Tanggal dan Waktu -->
+                                <div class="field-category mb-4">
+                                    <h3 class="text-sm font-semibold text-gray-700 mb-2 flex items-center">
+                                        <i class="fas fa-calendar-alt text-yellow-600 mr-2"></i>
+                                        Tanggal dan Waktu
+                                    </h3>
+                                    <div class="space-y-1">
+                                        <div class="field-type bg-yellow-50 border border-yellow-200 rounded p-2 cursor-move hover:bg-yellow-100 transition duration-200" data-type="date" draggable="true">
+                                            <div class="flex items-center">
+                                                <i class="fas fa-calendar text-yellow-600 mr-2 text-sm"></i>
+                                                <span class="text-sm font-medium text-yellow-800">Date</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="field-type bg-yellow-50 border border-yellow-200 rounded p-2 cursor-move hover:bg-yellow-100 transition duration-200" data-type="time" draggable="true">
+                                            <div class="flex items-center">
+                                                <i class="fas fa-clock text-yellow-600 mr-2 text-sm"></i>
+                                                <span class="text-sm font-medium text-yellow-800">Time</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="field-type bg-yellow-50 border border-yellow-200 rounded p-2 cursor-move hover:bg-yellow-100 transition duration-200" data-type="datetime" draggable="true">
+                                            <div class="flex items-center">
+                                                <i class="fas fa-calendar-plus text-yellow-600 mr-2 text-sm"></i>
+                                                <span class="text-sm font-medium text-yellow-800">Datetime</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="field-type bg-pink-100 border border-pink-300 rounded p-2 cursor-move hover:bg-pink-200 transition duration-200" data-type="number" draggable="true">
-                                    <div class="flex items-center">
-                                        <i class="fas fa-hashtag text-pink-600 mr-2 text-sm"></i>
-                                        <span class="text-sm font-medium text-pink-800">Number</span>
+                                <!-- 4. Kontak dan Identitas -->
+                                <div class="field-category mb-4">
+                                    <h3 class="text-sm font-semibold text-gray-700 mb-2 flex items-center">
+                                        <i class="fas fa-address-card text-purple-600 mr-2"></i>
+                                        Kontak dan Identitas
+                                    </h3>
+                                    <div class="space-y-1">
+                                        <div class="field-type bg-purple-50 border border-purple-200 rounded p-2 cursor-move hover:bg-purple-100 transition duration-200" data-type="email" draggable="true">
+                                            <div class="flex items-center">
+                                                <i class="fas fa-envelope text-purple-600 mr-2 text-sm"></i>
+                                                <span class="text-sm font-medium text-purple-800">Email</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="field-type bg-purple-50 border border-purple-200 rounded p-2 cursor-move hover:bg-purple-100 transition duration-200" data-type="tel" draggable="true">
+                                            <div class="flex items-center">
+                                                <i class="fas fa-phone text-purple-600 mr-2 text-sm"></i>
+                                                <span class="text-sm font-medium text-purple-800">Phone</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="field-type bg-purple-50 border border-purple-200 rounded p-2 cursor-move hover:bg-purple-100 transition duration-200" data-type="url" draggable="true">
+                                            <div class="flex items-center">
+                                                <i class="fas fa-link text-purple-600 mr-2 text-sm"></i>
+                                                <span class="text-sm font-medium text-purple-800">URL</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="field-type bg-orange-100 border border-orange-300 rounded p-2 cursor-move hover:bg-orange-200 transition duration-200" data-type="password" draggable="true">
-                                    <div class="flex items-center">
-                                        <i class="fas fa-lock text-orange-600 mr-2 text-sm"></i>
-                                        <span class="text-sm font-medium text-orange-800">Password</span>
+                                <!-- 5. File dan Upload -->
+                                <div class="field-category mb-4">
+                                    <h3 class="text-sm font-semibold text-gray-700 mb-2 flex items-center">
+                                        <i class="fas fa-cloud-upload-alt text-red-600 mr-2"></i>
+                                        File dan Upload
+                                    </h3>
+                                    <div class="space-y-1">
+                                        <div class="field-type bg-red-50 border border-red-200 rounded p-2 cursor-move hover:bg-red-100 transition duration-200" data-type="file" draggable="true">
+                                            <div class="flex items-center">
+                                                <i class="fas fa-file text-red-600 mr-2 text-sm"></i>
+                                                <span class="text-sm font-medium text-red-800">File Upload</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="field-type bg-red-50 border border-red-200 rounded p-2 cursor-move hover:bg-red-100 transition duration-200" data-type="image" draggable="true">
+                                            <div class="flex items-center">
+                                                <i class="fas fa-image text-red-600 mr-2 text-sm"></i>
+                                                <span class="text-sm font-medium text-red-800">Image Upload</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="field-type bg-cyan-100 border border-cyan-300 rounded p-2 cursor-move hover:bg-cyan-200 transition duration-200" data-type="url" draggable="true">
-                                    <div class="flex items-center">
-                                        <i class="fas fa-link text-cyan-600 mr-2 text-sm"></i>
-                                        <span class="text-sm font-medium text-cyan-800">URL</span>
+                                <!-- 6. Lokasi dan Lainnya -->
+                                <div class="field-category mb-4">
+                                    <h3 class="text-sm font-semibold text-gray-700 mb-2 flex items-center">
+                                        <i class="fas fa-map-marker-alt text-indigo-600 mr-2"></i>
+                                        Lokasi dan Lainnya
+                                    </h3>
+                                    <div class="space-y-1">
+                                        <div class="field-type bg-indigo-50 border border-indigo-200 rounded p-2 cursor-move hover:bg-indigo-100 transition duration-200" data-type="address" draggable="true">
+                                            <div class="flex items-center">
+                                                <i class="fas fa-map-pin text-indigo-600 mr-2 text-sm"></i>
+                                                <span class="text-sm font-medium text-indigo-800">Address / Location</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="field-type bg-indigo-50 border border-indigo-200 rounded p-2 cursor-move hover:bg-indigo-100 transition duration-200" data-type="signature" draggable="true">
+                                            <div class="flex items-center">
+                                                <i class="fas fa-signature text-indigo-600 mr-2 text-sm"></i>
+                                                <span class="text-sm font-medium text-indigo-800">Signature</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="field-type bg-indigo-50 border border-indigo-200 rounded p-2 cursor-move hover:bg-indigo-100 transition duration-200" data-type="rating" draggable="true">
+                                            <div class="flex items-center">
+                                                <i class="fas fa-star text-indigo-600 mr-2 text-sm"></i>
+                                                <span class="text-sm font-medium text-indigo-800">Rating / Star</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="field-type bg-indigo-50 border border-indigo-200 rounded p-2 cursor-move hover:bg-indigo-100 transition duration-200" data-type="color" draggable="true">
+                                            <div class="flex items-center">
+                                                <i class="fas fa-palette text-indigo-600 mr-2 text-sm"></i>
+                                                <span class="text-sm font-medium text-indigo-800">Color Picker</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="field-type bg-lime-100 border border-lime-300 rounded p-2 cursor-move hover:bg-lime-200 transition duration-200" data-type="tel" draggable="true">
-                                    <div class="flex items-center">
-                                        <i class="fas fa-phone text-lime-600 mr-2 text-sm"></i>
-                                        <span class="text-sm font-medium text-lime-800">Phone</span>
-                                    </div>
-                                </div>
+                                <!-- 7. Struktur dan Logika Form -->
+                                <div class="field-category mb-4">
+                                    <h3 class="text-sm font-semibold text-gray-700 mb-2 flex items-center">
+                                        <i class="fas fa-sitemap text-gray-600 mr-2"></i>
+                                        Struktur dan Logika Form
+                                    </h3>
+                                    <div class="space-y-1">
+                                        <div class="field-type bg-gray-50 border border-gray-200 rounded p-2 cursor-move hover:bg-gray-100 transition duration-200" data-type="header" draggable="true">
+                                            <div class="flex items-center">
+                                                <i class="fas fa-heading text-gray-600 mr-2 text-sm"></i>
+                                                <span class="text-sm font-medium text-gray-800">Heading / Label</span>
+                                            </div>
+                                        </div>
 
-                                <!-- Selection Fields -->
-                                <div class="field-type bg-purple-100 border border-purple-300 rounded p-2 cursor-move hover:bg-purple-200 transition duration-200" data-type="select" draggable="true">
-                                    <div class="flex items-center">
-                                        <i class="fas fa-list text-purple-600 mr-2 text-sm"></i>
-                                        <span class="text-sm font-medium text-purple-800">Select</span>
-                                    </div>
-                                </div>
+                                        <div class="field-type bg-gray-50 border border-gray-200 rounded p-2 cursor-move hover:bg-gray-100 transition duration-200" data-type="divider" draggable="true">
+                                            <div class="flex items-center">
+                                                <i class="fas fa-minus text-gray-600 mr-2 text-sm"></i>
+                                                <span class="text-sm font-medium text-gray-800">Divider</span>
+                                            </div>
+                                        </div>
 
-                                <div class="field-type bg-red-100 border border-red-300 rounded p-2 cursor-move hover:bg-red-200 transition duration-200" data-type="radio" draggable="true">
-                                    <div class="flex items-center">
-                                        <i class="fas fa-dot-circle text-red-600 mr-2 text-sm"></i>
-                                        <span class="text-sm font-medium text-red-800">Radio</span>
-                                    </div>
-                                </div>
+                                        <div class="field-type bg-gray-50 border border-gray-200 rounded p-2 cursor-move hover:bg-gray-100 transition duration-200" data-type="html" draggable="true">
+                                            <div class="flex items-center">
+                                                <i class="fas fa-code text-gray-600 mr-2 text-sm"></i>
+                                                <span class="text-sm font-medium text-gray-800">HTML Block</span>
+                                            </div>
+                                        </div>
 
-                                <div class="field-type bg-indigo-100 border border-indigo-300 rounded p-2 cursor-move hover:bg-indigo-200 transition duration-200" data-type="checkbox" draggable="true">
-                                    <div class="flex items-center">
-                                        <i class="fas fa-check-square text-indigo-600 mr-2 text-sm"></i>
-                                        <span class="text-sm font-medium text-indigo-800">Checkbox</span>
-                                    </div>
-                                </div>
-
-                                <!-- Date & Time Fields -->
-                                <div class="field-type bg-teal-100 border border-teal-300 rounded p-2 cursor-move hover:bg-teal-200 transition duration-200" data-type="date" draggable="true">
-                                    <div class="flex items-center">
-                                        <i class="fas fa-calendar text-teal-600 mr-2 text-sm"></i>
-                                        <span class="text-sm font-medium text-teal-800">Date</span>
-                                    </div>
-                                </div>
-
-                                <div class="field-type bg-emerald-100 border border-emerald-300 rounded p-2 cursor-move hover:bg-emerald-200 transition duration-200" data-type="time" draggable="true">
-                                    <div class="flex items-center">
-                                        <i class="fas fa-clock text-emerald-600 mr-2 text-sm"></i>
-                                        <span class="text-sm font-medium text-emerald-800">Time</span>
-                                    </div>
-                                </div>
-
-                                <div class="field-type bg-violet-100 border border-violet-300 rounded p-2 cursor-move hover:bg-violet-200 transition duration-200" data-type="datetime" draggable="true">
-                                    <div class="flex items-center">
-                                        <i class="fas fa-calendar-alt text-violet-600 mr-2 text-sm"></i>
-                                        <span class="text-sm font-medium text-violet-800">DateTime</span>
-                                    </div>
-                                </div>
-
-                                <!-- File & Media Fields -->
-                                <div class="field-type bg-rose-100 border border-rose-300 rounded p-2 cursor-move hover:bg-rose-200 transition duration-200" data-type="file" draggable="true">
-                                    <div class="flex items-center">
-                                        <i class="fas fa-upload text-rose-600 mr-2 text-sm"></i>
-                                        <span class="text-sm font-medium text-rose-800">File Upload</span>
-                                    </div>
-                                </div>
-
-                                <div class="field-type bg-sky-100 border border-sky-300 rounded p-2 cursor-move hover:bg-sky-200 transition duration-200" data-type="image" draggable="true">
-                                    <div class="flex items-center">
-                                        <i class="fas fa-image text-sky-600 mr-2 text-sm"></i>
-                                        <span class="text-sm font-medium text-sky-800">Image</span>
-                                    </div>
-                                </div>
-
-                                <!-- Content Fields -->
-                                <div class="field-type bg-amber-100 border border-amber-300 rounded p-2 cursor-move hover:bg-amber-200 transition duration-200" data-type="header" draggable="true">
-                                    <div class="flex items-center">
-                                        <i class="fas fa-heading text-amber-600 mr-2 text-sm"></i>
-                                        <span class="text-sm font-medium text-amber-800">Header</span>
-                                    </div>
-                                </div>
-
-                                <div class="field-type bg-slate-100 border border-slate-300 rounded p-2 cursor-move hover:bg-slate-200 transition duration-200" data-type="paragraph" draggable="true">
-                                    <div class="flex items-center">
-                                        <i class="fas fa-paragraph text-slate-600 mr-2 text-sm"></i>
-                                        <span class="text-sm font-medium text-slate-800">Paragraph</span>
-                                    </div>
-                                </div>
-
-                                <div class="field-type bg-neutral-100 border border-neutral-300 rounded p-2 cursor-move hover:bg-neutral-200 transition duration-200" data-type="divider" draggable="true">
-                                    <div class="flex items-center">
-                                        <i class="fas fa-minus text-neutral-600 mr-2 text-sm"></i>
-                                        <span class="text-sm font-medium text-neutral-800">Divider</span>
-                                    </div>
-                                </div>
-
-                                <!-- Advanced Fields -->
-                                <div class="field-type bg-fuchsia-100 border border-fuchsia-300 rounded p-2 cursor-move hover:bg-fuchsia-200 transition duration-200" data-type="rating" draggable="true">
-                                    <div class="flex items-center">
-                                        <i class="fas fa-star text-fuchsia-600 mr-2 text-sm"></i>
-                                        <span class="text-sm font-medium text-fuchsia-800">Rating</span>
-                                    </div>
-                                </div>
-
-                                <div class="field-type bg-stone-100 border border-stone-300 rounded p-2 cursor-move hover:bg-stone-200 transition duration-200" data-type="range" draggable="true">
-                                    <div class="flex items-center">
-                                        <i class="fas fa-sliders-h text-stone-600 mr-2 text-sm"></i>
-                                        <span class="text-sm font-medium text-stone-800">Range</span>
-                                    </div>
-                                </div>
-
-                                <div class="field-type bg-red-200 border border-red-400 rounded p-2 cursor-move hover:bg-red-300 transition duration-200" data-type="captcha" draggable="true">
-                                    <div class="flex items-center">
-                                        <i class="fas fa-shield-alt text-red-700 mr-2 text-sm"></i>
-                                        <span class="text-sm font-medium text-red-900">Captcha</span>
-                                    </div>
-                                </div>
-
-                                <div class="field-type bg-green-200 border border-green-400 rounded p-2 cursor-move hover:bg-green-300 transition duration-200" data-type="signature" draggable="true">
-                                    <div class="flex items-center">
-                                        <i class="fas fa-signature text-green-700 mr-2 text-sm"></i>
-                                        <span class="text-sm font-medium text-green-900">Signature</span>
-                                    </div>
-                                </div>
-
-                                <div class="field-type bg-blue-200 border border-blue-400 rounded p-2 cursor-move hover:bg-blue-300 transition duration-200" data-type="color" draggable="true">
-                                    <div class="flex items-center">
-                                        <i class="fas fa-palette text-blue-700 mr-2 text-sm"></i>
-                                        <span class="text-sm font-medium text-blue-900">Color</span>
+                                        <div class="field-type bg-gray-50 border border-gray-200 rounded p-2 cursor-move hover:bg-gray-100 transition duration-200" data-type="hidden" draggable="true">
+                                            <div class="flex items-center">
+                                                <i class="fas fa-eye-slash text-gray-600 mr-2 text-sm"></i>
+                                                <span class="text-sm font-medium text-gray-800">Hidden Field</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

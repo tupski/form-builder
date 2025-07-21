@@ -26,12 +26,14 @@ function initializeFormBuilder() {
     // Make field types draggable
     const fieldTypeSortable = new Sortable(fieldTypes, {
         group: {
-            name: 'shared',
+            name: 'formBuilder',
             pull: 'clone',
             put: false
         },
         sort: false,
         animation: 150,
+        forceFallback: true,
+        fallbackClass: 'sortable-fallback',
         ghostClass: 'sortable-ghost',
         chosenClass: 'sortable-chosen',
         dragClass: 'sortable-drag',
@@ -39,18 +41,30 @@ function initializeFormBuilder() {
             console.log('Drag started:', evt.item.getAttribute('data-type'));
             evt.item.classList.add('dragging');
             dropZone.classList.add('drag-over');
+
+            // Add visual feedback
+            document.body.classList.add('dragging-field');
         },
         onEnd: function(evt) {
             console.log('Drag ended');
             evt.item.classList.remove('dragging');
             dropZone.classList.remove('drag-over');
+
+            // Remove visual feedback
+            document.body.classList.remove('dragging-field');
         }
     });
 
-    // Make form fields sortable
+    // Make form fields sortable and droppable
     sortable = new Sortable(formFields, {
-        group: 'shared',
+        group: {
+            name: 'formBuilder',
+            pull: true,
+            put: true
+        },
         animation: 150,
+        forceFallback: true,
+        fallbackClass: 'sortable-fallback',
         ghostClass: 'sortable-ghost',
         chosenClass: 'sortable-chosen',
         dragClass: 'sortable-drag',
@@ -58,12 +72,14 @@ function initializeFormBuilder() {
             console.log('Field added to form:', evt.item.getAttribute('data-type'));
             const fieldType = evt.item.getAttribute('data-type');
             if (fieldType) {
+                // Create new field
                 addField(fieldType);
+                // Remove the dragged element
                 evt.item.remove();
                 hideEmptyState();
             }
         },
-        onEnd: function(evt) {
+        onUpdate: function(evt) {
             console.log('Field reordered');
             updateFieldOrder();
         },
